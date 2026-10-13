@@ -1,0 +1,21 @@
+receivers:
+  otlp:
+    protocols:
+      http:                       # écoute sur 4318/tcp
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch: {}
+
+exporters:
+  otlphttp:
+    endpoint: https://musical-guide-977q7p6p9vjvfq5v-14318.app.github.dev   # URL vers Jaeger port 4318
+  logging:
+    loglevel: info
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp, logging]
